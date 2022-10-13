@@ -101,9 +101,10 @@ public class DataBaseMethods{
 		return (rowsInserted > 0);
 	}
 	
-	public Users findUser(String name, String password) throws SQLException{
+	public static Users findUser(String name, String password) throws SQLException{
+	    Connection conn = ConnDB.getConnection();
 		String sql = "SELECT * FROM users WHERE name=? and password=?;";
-		PreparedStatement statement = c.prepareStatement(sql);
+		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, name);
 		statement.setString(2, password);
 		ResultSet result = statement.executeQuery();
