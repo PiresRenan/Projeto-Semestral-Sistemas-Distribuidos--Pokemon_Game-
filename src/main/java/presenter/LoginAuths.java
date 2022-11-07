@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import model.DataBaseMethods;
 import model.Users;
 import view.AdmWindow;
+import view.UserWindow;
 
 
 public class LoginAuths {
@@ -14,7 +15,7 @@ public class LoginAuths {
             Users user = DataBaseMethods.findUser(username, password);
             switch (user.getType()) {
                 case 0:
-                    
+                    UserWindow normalUser = new UserWindow();
                     break;
                 case 1:
                     AdmUser admUser = new AdmUser();

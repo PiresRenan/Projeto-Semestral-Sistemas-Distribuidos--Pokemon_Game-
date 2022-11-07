@@ -57,36 +57,16 @@ public class DataBaseMethods{
 	}
 	
 	public boolean updatePokemon(String where, String value, String actualValue) throws SQLException {
-		String sql = "";
-		int updated = 0;
-		switch (where) {
-		case "id":
-			sql = "UPDATE pokes SET id=? WHERE id=?;";
-			PreparedStatement statement = c.prepareStatement(sql);
-			int int_value = Integer.parseInt(value);
-			int int_actualValue = Integer.parseInt(actualValue);
-			statement.setInt(1, int_value);
-			statement.setInt(2, int_actualValue);
-			System.out.println(sql);
-			updated = statement.executeUpdate();
-			return (updated > 0);
-		case "name":
-			System.out.println("To aqui");
-			sql = "UPDATE pokes SET name=? WHERE name=?;";
-			statement = c.prepareStatement(sql);
-			statement.setString(1, value);
-			statement.setString(2, actualValue);
-			System.out.println(sql);
-			updated = statement.executeUpdate();
-			return (updated > 0);
-		default:
-			break;
-		}
-		return (updated > 0);
+	    String sql = "UPDATE `pokemons`.`pokes` SET `"+where+"` = '?' WHERE (`"+where+"` = '27');";
+	    return true;
 	}
 	
 	public boolean deletePokemon(String name) throws SQLException{
-		return false;
+	    String sql = "DELETE FROM pokes WHERE name=?";
+	    PreparedStatement statement = c.prepareStatement(sql);
+	    statement.setString(1, name);
+	    statement.executeUpdate();
+		return true;
 	}
 	
 	public boolean newUser(Users user) throws SQLException {

@@ -9,6 +9,9 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 
 import javax.swing.JTextField;
+
+import model.DataBaseMethods;
+
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -82,12 +85,22 @@ public class LoginWindow {
         cadastroBtn.setBounds(76, 284, 127, 43);
         cadastroBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                CadastroWindow a = new CadastroWindow();
+                principalFrame.dispose();
             }
         });
         
         
         newPasswordBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String nome = JOptionPane.showInputDialog("Digite o email do usuario que deseja trocar a senha:");
+                String senha = JOptionPane.showInputDialog("Digite nova senha:");
+                DataBaseMethods a = new DataBaseMethods();
+                try {
+                    a.changePassword(nome, senha);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         newPasswordBtn.setFont(new Font("Showcard Gothic", Font.ITALIC, 12));

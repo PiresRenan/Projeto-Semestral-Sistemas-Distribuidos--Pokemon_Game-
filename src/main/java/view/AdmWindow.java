@@ -5,14 +5,22 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import model.DataBaseMethods;
 
 public class AdmWindow {
 
 	private JFrame frame;
 	public JList<String> list;
 	public JList<?> list_1;
+	private JTextField senderTextField;
+	private JTextField receiveTextField;
+	private JTextField ipTextField;
 
 	
 	public AdmWindow() {
@@ -63,12 +71,23 @@ public class AdmWindow {
 		newPokemonBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
 		newPokemonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    NewPokemon p = new NewPokemon();
 			}
 		});
 		newPokemonBtn.setBounds(79, 185, 156, 35);
 		
 		editPokemonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    String pokeName = JOptionPane.showInputDialog(null, "Digite o nome do Pokemon que deseja alterar:");
+			    DataBaseMethods a = new DataBaseMethods();
+			    try {
+                    String pokemon = a.searchPokemon(pokeName);
+                    JOptionPane.showMessageDialog(null,"O pokemon que deseja alterar:\n"+ pokemon);
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+			    String atribute = JOptionPane.showInputDialog(null, "Digite o atributo que deseja alterar:(id, name, type, abilities, hp, att, def, special_att, special_def, spd)");
 			}
 		});
 		editPokemonBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -76,6 +95,20 @@ public class AdmWindow {
 		
 		deletePokemonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    String pokeName = JOptionPane.showInputDialog(null, "Digite o nome do Pokemon que deseja alterar:");
+                DataBaseMethods a = new DataBaseMethods();
+                try {
+                    String pokemon = a.searchPokemon(pokeName);
+                    int i = JOptionPane.showConfirmDialog(null,"O pokemon que deseja excluir:\n"+ pokemon);
+                    if(i != 0) {
+                        JOptionPane.showMessageDialog(null, "Cancelado");
+                    }else {
+                        a.deletePokemon(pokeName);
+                    }
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
 			}
 		});
 		deletePokemonBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -114,5 +147,50 @@ public class AdmWindow {
 		frame.getContentPane().add(ctrlPokemonLabel);
 		frame.getContentPane().add(admLabel);
 		frame.getContentPane().add(list_1);
+		
+		JLabel senderLabel = new JLabel("Sender");
+		senderLabel.setFont(new Font("Bookman Old Style", Font.BOLD, 14));
+		senderLabel.setBounds(10, 526, 54, 14);
+		frame.getContentPane().add(senderLabel);
+		
+		senderTextField = new JTextField();
+		senderTextField.setFont(new Font("Anonymous Pro", Font.PLAIN, 12));
+		senderTextField.setText("3000");
+		senderTextField.setBounds(79, 524, 54, 20);
+		frame.getContentPane().add(senderTextField);
+		senderTextField.setColumns(10);
+		
+		JLabel receiveLabel = new JLabel("Receive");
+		receiveLabel.setFont(new Font("Bookman Old Style", Font.BOLD, 14));
+		receiveLabel.setBounds(10, 586, 68, 14);
+		frame.getContentPane().add(receiveLabel);
+		
+		receiveTextField = new JTextField();
+		receiveTextField.setText("3001");
+		receiveTextField.setFont(new Font("Anonymous Pro", Font.PLAIN, 12));
+		receiveTextField.setColumns(10);
+		receiveTextField.setBounds(79, 584, 54, 20);
+		frame.getContentPane().add(receiveTextField);
+		
+		JLabel ipLabel = new JLabel("IP");
+		ipLabel.setFont(new Font("Bookman Old Style", Font.BOLD, 14));
+		ipLabel.setBounds(10, 557, 54, 14);
+		frame.getContentPane().add(ipLabel);
+		
+		ipTextField = new JTextField();
+		ipTextField.setText("localhost");
+		ipTextField.setFont(new Font("Anonymous Pro", Font.PLAIN, 12));
+		ipTextField.setColumns(10);
+		ipTextField.setBounds(79, 555, 156, 20);
+		frame.getContentPane().add(ipTextField);
+		
+		JButton connectBtn = new JButton("Conectar");
+		connectBtn.setFont(new Font("Arial Black", Font.BOLD, 12));
+		connectBtn.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    }
+		});
+		connectBtn.setBounds(245, 540, 102, 49);
+		frame.getContentPane().add(connectBtn);
 	}
 }

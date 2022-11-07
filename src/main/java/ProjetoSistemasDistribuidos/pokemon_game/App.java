@@ -1,12 +1,11 @@
 package ProjetoSistemasDistribuidos.pokemon_game;
 
-import presenter.AdmUser;
+import view.LoginWindow;
 
 public class App 
 {
-    public static void main( String[] args )
-    {
-        AdmUser a = new AdmUser();
-        a.newPokemon();
+    public static void main( String[] args ){
+        LoginWindow a = new LoginWindow();
+
     }
 }
