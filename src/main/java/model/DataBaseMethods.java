@@ -17,6 +17,23 @@ public class DataBaseMethods{
 		}
 	}
 	
+	public boolean insertUserPokemon(Pokemon p, String owner) throws SQLException {
+        String sql = "INSERT INTO userpokemons (owner, pokemon, type, abilities, hp, att, def, special_att, special_def, spd) VALUES (?,?,?,?,?,?,?,?,?,?);";
+        PreparedStatement statement = c.prepareStatement(sql);
+        statement.setString(1, owner);
+        statement.setString(2, p.getName());
+        statement.setString(3, p.getType());
+        statement.setString(4, p.getAbilities());
+        statement.setInt(5, p.getHp());
+        statement.setInt(6, p.getAtt());
+        statement.setInt(7, p.getDef());
+        statement.setInt(8, p.getSpecial_att());
+        statement.setInt(9, p.getSpecial_def());
+        statement.setInt(10, p.getSpd());
+        int rowsInserted = statement.executeUpdate();
+        return (rowsInserted > 0);
+    }
+	
 	public boolean insertPokemon(Pokemon p) throws SQLException {
 		String sql = "INSERT INTO pokes (name, type, abilities, hp, att, def, special_att, special_def, spd) VALUES (?,?,?,?,?,?,?,?,?);";
 		PreparedStatement statement = c.prepareStatement(sql);
@@ -33,7 +50,7 @@ public class DataBaseMethods{
 		return (rowsInserted > 0);
 	}
 	
-	public String searchPokemon(String name) throws SQLException{
+	public Pokemon searchPokemon(String name) throws SQLException{
 		String sql = "SELECT * FROM pokes WHERE name=?;";
 		PreparedStatement statement = c.prepareStatement(sql);
 		statement.setString(1, name);
@@ -51,20 +68,47 @@ public class DataBaseMethods{
 					result.getInt(9), 
 					result.getInt(10)
 					);
-			return p.toString();
+			return p;
 		}
-		return "Pokemon não encontrado";
+		return null;
 	}
 	
+	public Pokemon searchPokemonID(int id) throws SQLException{
+        String sql = "SELECT * FROM pokes WHERE id=?;";
+        PreparedStatement statement = c.prepareStatement(sql);
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        if(result.next()) {
+            Pokemon p = new Pokemon(
+                    result.getInt(1),
+                    result.getString(2), 
+                    result.getString(3), 
+                    result.getString(4), 
+                    result.getInt(5), 
+                    result.getInt(6), 
+                    result.getInt(7), 
+                    result.getInt(8), 
+                    result.getInt(9), 
+                    result.getInt(10)
+                    );
+            return p;
+        }
+        return null;
+    }
+	
 	public boolean updatePokemon(String where, String value, String actualValue) throws SQLException {
-	    String sql = "UPDATE `pokemons`.`pokes` SET `"+where+"` = '?' WHERE (`"+where+"` = '27');";
+	    String sql = "UPDATE `pokemons`.`pokes` SET `"+where+"` = ? WHERE (`id` = ?);";
+	    PreparedStatement statement = c.prepareStatement(sql);
+	    statement.setString(1, value);
+	    statement.setString(2, actualValue);
+	    statement.executeUpdate();
 	    return true;
 	}
 	
-	public boolean deletePokemon(String name) throws SQLException{
-	    String sql = "DELETE FROM pokes WHERE name=?";
+	public boolean deletePokemon(int id) throws SQLException{
+	    String sql = "DELETE FROM pokes WHERE id=?";
 	    PreparedStatement statement = c.prepareStatement(sql);
-	    statement.setString(1, name);
+	    statement.setInt(1, id);
 	    statement.executeUpdate();
 		return true;
 	}

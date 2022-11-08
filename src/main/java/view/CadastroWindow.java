@@ -7,10 +7,12 @@ import java.awt.Font;
 import javax.swing.JTextField;
 
 import model.DataBaseMethods;
+import model.Pokemon;
 import model.Users;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class CadastroWindow {
@@ -103,6 +105,16 @@ public class CadastroWindow {
                         DataBaseMethods a = new DataBaseMethods();
                         try {
                             a.newUser(newUser);
+                            int qtdpokemons = 0;
+                            Random r = new Random();
+                            while(qtdpokemons < 3) {
+                                int pokeSelected = r.nextInt(15);
+                                if(pokeSelected > 0) {
+                                    Pokemon p = a.searchPokemonID(pokeSelected);
+                                    a.insertUserPokemon(p, nome);
+                                    qtdpokemons ++;
+                                }
+                            }
                             LoginWindow b = new LoginWindow();
                         } catch (Exception e1){
                             e1.printStackTrace();

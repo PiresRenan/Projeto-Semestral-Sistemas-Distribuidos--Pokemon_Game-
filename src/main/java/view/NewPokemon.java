@@ -152,6 +152,7 @@ public class NewPokemon {
                     a.insertPokemon(p);
                     JOptionPane.showMessageDialog(null, "Pokemon inserido");
                     frame.dispose();
+                    AdmWindow aa = new AdmWindow();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }

@@ -10,7 +10,4 @@ public class AdmUser {
         janelaAdm = new AdmWindow();
     }
     
-    public void newPokemon() {
-        janelaAdm.list.add("a", null);
-    }
 }
