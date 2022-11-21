@@ -27,7 +27,7 @@ public class UserWindow {
     Server server;
     
     private void findBtn(ActionEvent e) {
-        server = new Server();
+        server = new Server(null, 0);
         server.start();
     }
 

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class DataBaseMethods{
 	
 	Connection c;
@@ -125,6 +127,33 @@ public class DataBaseMethods{
 		return (rowsInserted > 0);
 	}
 	
+	public static Users findUserByEmail(String email) throws SQLException{
+        Connection conn = ConnDB.getConnection();
+        String sql = "SELECT * FROM users WHERE email=?;";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, email);
+        ResultSet result = statement.executeQuery();
+        if(result.next()) {
+            Users user = new Users(
+                    result.getInt(1),
+                    result.getString(2),
+                    result.getString(3), 
+                    result.getString(4),  
+                    result.getInt(5),
+                    result.getInt(6)
+                    );
+            return user;
+        }
+        return null;
+    }
+	
+	public static void updateUser(String query) throws SQLException{
+	    Connection conn = ConnDB.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Alterado com sucesso");
+    }
+	
 	public static Users findUser(String name, String password) throws SQLException{
 	    Connection conn = ConnDB.getConnection();
 		String sql = "SELECT * FROM users WHERE name=? and password=?;";
@@ -134,11 +163,12 @@ public class DataBaseMethods{
 		ResultSet result = statement.executeQuery();
 		if(result.next()) {
 			Users user = new Users(
-					result.getString(1), 
+			        result.getInt(1),
 					result.getString(2), 
 					result.getString(3), 
-					result.getInt(4), 
-					result.getInt(5)
+					result.getString(4), 
+					result.getInt(5),
+					result.getInt(6)
 					);
 			return user;
 		}
@@ -154,8 +184,38 @@ public class DataBaseMethods{
 		return (updated > 0);
 	}
 	
-	public boolean deleteUser(int id) throws SQLException{
-		String sql = "DELETE FROM users WHERE id=?";
-		return false;
+	public static void deleteUser(String query){
+	    Connection c = ConnDB.getConnection(); 
+		PreparedStatement st;
+        try {
+            st = c.prepareStatement(query);
+            st.execute();
+            JOptionPane.showMessageDialog(null, "Usuario excluido com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public static void findPokemonsUsers(String name) throws SQLException {
+	    String query = "SELECT * FROM userpokemons WHERE owner=?";
+	    Connection c = ConnDB.getConnection(); 
+	    PreparedStatement st = c.prepareStatement(query);
+	    st.setString(1, name);
+	    ResultSet result = st.executeQuery();
+	    if(result.next()) {
+	        Pokemon pokemon = new Pokemon(
+	                result.getInt(1),
+	                result.getString(2),
+	                result.getString(3),
+	                result.getString(4),
+	                result.getInt(5),
+	                result.getInt(6),
+	                result.getInt(7),
+	                result.getInt(8),
+	                result.getInt(9),
+	                result.getInt(10)
+	                );
+	        System.out.println(result);
+	    }
 	}
 }

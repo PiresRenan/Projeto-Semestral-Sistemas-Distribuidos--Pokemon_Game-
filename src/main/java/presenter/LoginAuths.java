@@ -18,7 +18,7 @@ public class LoginAuths {
                     UserWindow normalUser = new UserWindow();
                     break;
                 case 1:
-                    AdmUser admUser = new AdmUser();
+                    AdmWindow a = new AdmWindow(user);
                     break;
                 default:
                     break;
@@ -27,4 +27,5 @@ public class LoginAuths {
         }
         return false;
     }
+    
 }

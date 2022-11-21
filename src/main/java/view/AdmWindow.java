@@ -7,10 +7,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.DataBaseMethods;
 import model.Pokemon;
+import model.Users;
+import presenter.AdmUser;
 import javax.swing.JComboBox;
 
 public class AdmWindow {
@@ -21,6 +22,7 @@ public class AdmWindow {
 	private JTextField ipTextField;
 	String[] array = new String[10];
 	private JComboBox pokemonComboBox;
+	Users user;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -47,8 +49,12 @@ public class AdmWindow {
         return s.getId() + " - " + s.getName() + " (att=" + s.getAtt() + " ,def=" + s.getDef() + " ,hp=" + s.getHp() + " , spc_att=" + s.getSpecial_att() + " , spc_def=" + s.getSpecial_def() + " , spd=" + s.getSpd() + ")";
     }
 	
-	public AdmWindow() {
+	public AdmWindow(Users userlogin) {
 		initialize();
+		user = userlogin;
+	}
+	public AdmWindow() {
+	    initialize();
 	}
 
 	private void initialize() {
@@ -66,17 +72,20 @@ public class AdmWindow {
 		JButton deleteUserBtn = new JButton("Deletar Usuario");
 		deleteUserBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+		        AdmUser.deleteUser();
 		    }
 		});
 		JButton editUserBtn = new JButton("Editar Usuario");
 		editUserBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+                AdmUser.editUser();
 		    }
 		});
 		JButton newUserBtn = new JButton("Novo Usuario");
 		JButton btnJogar = new JButton("Jogar");
 		btnJogar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+		        
 		    }
 		});
 		
@@ -113,116 +122,7 @@ public class AdmWindow {
 		
 		editPokemonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    Pokemon pokemon = null;
-			    String pokeName = JOptionPane.showInputDialog(null, "Digite o nome do Pokemon que deseja alterar:");
-			    String pokeName2 = pokeName.substring(0,1).toUpperCase();
-			    pokeName = pokeName2 + pokeName.substring(1); 
-			    DataBaseMethods a = new DataBaseMethods();
-			    try {
-                    pokemon = a.searchPokemon(pokeName);
-                    JOptionPane.showMessageDialog(null,"O pokemon que deseja alterar:\n"+ pokemon.toString());
-                } catch (SQLException e1) {
-                    JOptionPane.showMessageDialog(null, "Pokemon não encontrado.");
-                    e1.printStackTrace();
-                }
-			    String atribute = JOptionPane.showInputDialog(null, "Digite o atributo que deseja alterar:(id, name, type, abilities, hp, att, def, special_att, special_def, spd)");
-			    String value = JOptionPane.showInputDialog(null, "Digite o valor novo:");
-			    switch(atribute.toLowerCase()) {
-			        case "id":
-			            try {
-                            a.updatePokemon("id", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-			            break;
-			        case "name":
-                        try {
-                            a.updatePokemon("name", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;
-			        case "type":
-                        try {
-                            a.updatePokemon("type", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;
-			        case "abilities":
-                        try {
-                            a.updatePokemon("abilities", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;
-			        case "hp":
-                        try {
-                            a.updatePokemon("hp", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;
-			        case "att":
-                        try {
-                            a.updatePokemon("att", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;
-			        case "def":
-                        try {
-                            a.updatePokemon("def", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;
-			        case "special_att":
-                        try {
-                            a.updatePokemon("special_att", value, Integer.toString(pokemon.getId()));
-                            JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                            populateList();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                        break;case "special_def":
-                            try {
-                                a.updatePokemon("special_def", value, Integer.toString(pokemon.getId()));
-                                JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                                populateList();
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
-                            }
-                            break;
-                        case "spd":
-                            try {
-                                a.updatePokemon("spd", value, Integer.toString(pokemon.getId()));
-                                JOptionPane.showMessageDialog(null, "Atributo alterado com Sucesso!");
-                                populateList();
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
-                            }
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(null, "Atributo invalido");
-                            break;
-                        
-			    }
-			    
+			   AdmUser.editPokemon();  
 			}
 		});
 		editPokemonBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -230,20 +130,7 @@ public class AdmWindow {
 		
 		deletePokemonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    String pokeName = JOptionPane.showInputDialog(null, "Digite o nome do Pokemon que deseja alterar:");
-                DataBaseMethods a = new DataBaseMethods();
-                try {
-                    Pokemon pokemon = a.searchPokemon(pokeName);
-                    int i = JOptionPane.showConfirmDialog(null,"O pokemon que deseja excluir:\n"+ pokemon);
-                    if(i != 0) {
-                        JOptionPane.showMessageDialog(null, "Cancelado");
-                    }else {
-                        a.deletePokemon(pokemon.getId());
-                    }
-                } catch (SQLException e1) {
-                    
-                    e1.printStackTrace();
-                }
+			    AdmUser.deletePokemon();
 			}
 		});
 		deletePokemonBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -257,6 +144,7 @@ public class AdmWindow {
 		
 		newUserBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    CadastroWindow a = new CadastroWindow();
 			}
 		});
 		newUserBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -331,6 +219,7 @@ public class AdmWindow {
 		JButton upgradeBtn = new JButton("Treinar Pokemon");
 		upgradeBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+		        
 		    }
 		});
 		upgradeBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -345,5 +234,20 @@ public class AdmWindow {
 		changeBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
 		changeBtn.setBounds(245, 231, 156, 35);
 		frame.getContentPane().add(changeBtn);
+		
+		JButton btnCapturar = new JButton("Capturar Pokemon");
+		btnCapturar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+                    DataBaseMethods.findPokemonsUsers("aaaa");
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+		    }
+		});
+		btnCapturar.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 11));
+		btnCapturar.setBounds(245, 277, 156, 35);
+		frame.getContentPane().add(btnCapturar);
 	}
 }

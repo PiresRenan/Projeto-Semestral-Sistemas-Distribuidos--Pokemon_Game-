@@ -12,14 +12,7 @@ public class Server extends Thread {
     ServerSocket server;
     int port = 8877;
     Battle pokemon;
-    
-    public Server() {
-        try {
-            server = new ServerSocket(port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     
     public Server(Battle pokemon, int port) {
         this.port = port;
