@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 public class Server extends Thread {
     
     ServerSocket server;
@@ -24,10 +26,12 @@ public class Server extends Thread {
         }
     }
     
+
     @Override
     public void run() {
         Socket clientSocket;
         try {
+            JOptionPane.showMessageDialog(null, "Conectado com sucesso");
             while((clientSocket = server.accept()) != null) {
                 InputStream is = clientSocket.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));

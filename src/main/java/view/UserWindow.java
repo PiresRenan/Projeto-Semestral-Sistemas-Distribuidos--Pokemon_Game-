@@ -119,6 +119,12 @@ public class UserWindow {
         frame.getContentPane().add(trainingBtn);
         
         JButton changeBtn = new JButton("Trocar Pokemon");
+        changeBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ChangePokes p = new ChangePokes();
+                p.initialize();
+            }
+        });
         changeBtn.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
         changeBtn.setBounds(311, 157, 176, 51);
         frame.getContentPane().add(changeBtn);

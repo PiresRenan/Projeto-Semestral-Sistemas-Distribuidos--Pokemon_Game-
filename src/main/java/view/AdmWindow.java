@@ -229,6 +229,8 @@ public class AdmWindow {
 		JButton changeBtn = new JButton("Trocar Pokemon");
 		changeBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+		        ChangePokes p = new ChangePokes();
+		        p.initialize();
 		    }
 		});
 		changeBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
