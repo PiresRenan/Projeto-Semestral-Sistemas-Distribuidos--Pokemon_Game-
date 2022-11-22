@@ -30,6 +30,8 @@ public class LoginWindow {
     }
 
     private void initialize() {
+        
+
         principalFrame = new JFrame();
         principalFrame.setVisible(true);
         
@@ -43,9 +45,8 @@ public class LoginWindow {
         JButton loginBtn = new JButton("ENTRAR");
         JButton cadastroBtn = new JButton("Cadastro");
         JButton newPasswordBtn = new JButton("Nova Senha");
-        
-        
-        principalFrame.setTitle("Pokemon Distribuido");
+       
+        principalFrame.setTitle("Pokemon Master");
         principalFrame.setResizable(false);
         principalFrame.setBounds(100, 100, 300, 439);
         principalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
