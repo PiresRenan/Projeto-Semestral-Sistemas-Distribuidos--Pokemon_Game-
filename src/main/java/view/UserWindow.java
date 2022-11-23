@@ -12,10 +12,15 @@ import javax.swing.JScrollBar;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import model.DataBaseMethods;
+import model.Pokemon;
 import model.Server;
+import model.Users;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class UserWindow {
@@ -25,14 +30,16 @@ public class UserWindow {
     private JTextField opponentPortTextField;
     private JTextField ipTextField;
     Server server;
+    private Users user;
     
     private void findBtn(ActionEvent e) {
         server = new Server(null, 0);
         server.start();
     }
 
-    public UserWindow() {
+    public UserWindow(Users userLogado) {
         initialize();
+        user = userLogado;
     }
 
     private void initialize() {
@@ -135,6 +142,18 @@ public class UserWindow {
         frame.getContentPane().add(deletePokemon);
         
         JButton btnProcurarPokemon = new JButton("Procurar Pokemon");
+        btnProcurarPokemon.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try {
+					Random a = new Random();
+					int aleatorio_n = a.nextInt(14) + 1;
+                    Pokemon p = DataBaseMethods.searchPokemonID(aleatorio_n);
+					DataBaseMethods.capturarPokemon(p, user.getName());
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btnProcurarPokemon.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
         btnProcurarPokemon.setBounds(311, 281, 176, 51);
         frame.getContentPane().add(btnProcurarPokemon);

@@ -15,7 +15,7 @@ public class LoginAuths {
             Users user = DataBaseMethods.findUser(username, password);
             switch (user.getType()) {
                 case 0:
-                    UserWindow normalUser = new UserWindow();
+                    UserWindow normalUser = new UserWindow(user);
                     break;
                 case 1:
                     AdmWindow a = new AdmWindow(user);

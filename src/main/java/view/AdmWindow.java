@@ -2,10 +2,13 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import model.DataBaseMethods;
@@ -219,7 +222,7 @@ public class AdmWindow {
 		JButton upgradeBtn = new JButton("Treinar Pokemon");
 		upgradeBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        
+		       
 		    }
 		});
 		upgradeBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
@@ -241,7 +244,10 @@ public class AdmWindow {
 		btnCapturar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        try {
-                    DataBaseMethods.findPokemonsUsers("aaaa");
+					Random a = new Random();
+					 int aleatorio_n = a.nextInt(14) + 1;
+                    Pokemon p = DataBaseMethods.searchPokemonID(aleatorio_n);
+					DataBaseMethods.capturarPokemon(p, user.getName());
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }

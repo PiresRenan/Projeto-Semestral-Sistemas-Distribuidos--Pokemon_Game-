@@ -75,9 +75,11 @@ public class DataBaseMethods{
 		return null;
 	}
 	
-	public Pokemon searchPokemonUser(String name) throws SQLException{
-        String sql = "SELECT * FROM userpokemons;";
+	public static Pokemon searchPokemonUser(String name) throws SQLException{
+		Connection c = ConnDB.getConnection(); 
+        String sql = "SELECT * FROM userpokemons WHERE owner LIKE ?;";
         PreparedStatement statement = c.prepareStatement(sql);
+		statement.setString(1, name);
         ResultSet result = statement.executeQuery();
         while(result.next()) {
             Pokemon p = new Pokemon(
@@ -93,17 +95,13 @@ public class DataBaseMethods{
                     result.getInt(10),
                     result.getInt(11)
                     );
-            String nome = p.getOwner();
-            System.out.println(name + "\n" + nome + "\n" + (name == nome) + "\n");
-            if (nome == name) {
-                System.out.println(p);
-                return p;
-            }
+            System.out.println(p.toString());
         }
         return null;
     }
 	
-	public Pokemon searchPokemonID(int id) throws SQLException{
+	public static Pokemon searchPokemonID(int id) throws SQLException{
+		Connection c = ConnDB.getConnection(); 
         String sql = "SELECT * FROM pokes WHERE id=?;";
         PreparedStatement statement = c.prepareStatement(sql);
         statement.setInt(1, id);
@@ -125,6 +123,30 @@ public class DataBaseMethods{
         }
         return null;
     }
+
+	public static void capturarPokemon(Pokemon pokemon, String user) throws SQLException {
+		Connection c = ConnDB.getConnection();
+	    String sql = "INSERT INTO userpokemons (owner, pokemon, type, abilities, hp, att, def, special_att, special_def, spd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	    PreparedStatement st = c.prepareStatement(sql);
+		st.setString(1, user);
+		st.setString(2, pokemon.getName());
+		st.setString(3, pokemon.getType());
+		st.setString(4, pokemon.getAbilities());
+		st.setInt(5, pokemon.getHp());
+		st.setInt(6, pokemon.getAtt());
+		st.setInt(7, pokemon.getDef());
+		st.setInt(8, pokemon.getSpecial_att());
+		st.setInt(9, pokemon.getSpecial_def());
+		st.setInt(10, pokemon.getSpd());
+	    int i = st.executeUpdate();
+
+		if (i > 0) {
+			JOptionPane.showMessageDialog(null, "Parabéns, você encontrou um " + pokemon.getName());
+		}else {
+			JOptionPane.showMessageDialog(null, "Ops, o pokemon fugiu.");
+		}
+
+	}
 	
 	public boolean updatePokemon(String where, String value, String actualValue) throws SQLException {
 	    String sql = "UPDATE `pokemons`.`pokes` SET `"+where+"` = ? WHERE (`id` = ?);";

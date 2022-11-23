@@ -33,24 +33,14 @@ public class ChangePokes implements Battle{
     
     Server server;
     
-    @SuppressWarnings("unchecked")
     public void populateList() {
-        for(int i = 1; i <= 3; i++) {
-            Pokemon poke = null;
-            DataBaseMethods n = new DataBaseMethods();
-            try {
-                poke = n.searchPokemonUser("comum");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            if (poke != null) {
-                String pokeString = formatString(poke);
-                array[i-1] = pokeString;
-            }else {
-                array[i-1] = "null";
-            }
+        Pokemon poke = null;
+        DataBaseMethods n = new DataBaseMethods();
+        try {
+            poke = DataBaseMethods.searchPokemonUser("comum");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        selectPokemonComboBox = new JComboBox(array);
     }
     
     public static String formatString(Pokemon s) {
