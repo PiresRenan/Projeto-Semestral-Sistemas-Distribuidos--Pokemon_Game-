@@ -3,6 +3,8 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -12,19 +14,48 @@ import javax.swing.JTextField;
 import model.Battle;
 import model.Server;
 import model.Client;
+import model.DataBaseMethods;
+import model.Pokemon;
+import model.Users;
 
 public class ChangePokes implements Battle{
 
     private JFrame frame;
-    
+    Users user;
     private JTextField ipTextField;
     private JTextField portTextField;
     private JTextField messageTextField;
     private JTextField receivePort;
+    JTextArea myPokemonsTextArea;
     JButton listenBtn;
-    JTextArea chat;
+    String[] array = new String[10];
+    private JComboBox selectPokemonComboBox;
     
     Server server;
+    
+    @SuppressWarnings("unchecked")
+    public void populateList() {
+        for(int i = 1; i <= 3; i++) {
+            Pokemon poke = null;
+            DataBaseMethods n = new DataBaseMethods();
+            try {
+                poke = n.searchPokemonUser("comum");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (poke != null) {
+                String pokeString = formatString(poke);
+                array[i-1] = pokeString;
+            }else {
+                array[i-1] = "null";
+            }
+        }
+        selectPokemonComboBox = new JComboBox(array);
+    }
+    
+    public static String formatString(Pokemon s) {
+        return s.getId() + " - " + s.getName() + " (att=" + s.getAtt() + " ,def=" + s.getDef() + " ,hp=" + s.getHp() + " , spc_att=" + s.getSpecial_att() + " , spc_def=" + s.getSpecial_def() + " , spd=" + s.getSpd() + ")";
+    }
     
     private void listenBtn(ActionEvent e) {
         server = new Server(this, Integer.parseInt(receivePort.getText()));
@@ -38,8 +69,10 @@ public class ChangePokes implements Battle{
     
     public void initialize() {
         frame = new JFrame();
+        populateList();
         frame.setVisible(true);
-        frame.setBounds(100, 100, 797, 609);
+        frame.setResizable(false);
+        frame.setBounds(100, 100, 797, 650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
@@ -81,18 +114,18 @@ public class ChangePokes implements Battle{
                 listenBtn(e);
             }
         });
-        connectBtn.setBounds(194, 44, 76, 36);
+        connectBtn.setBounds(200, 44, 100, 40);
         frame.getContentPane().add(connectBtn);
         
-        JTextArea myPokemonsTextArea = new JTextArea();
+        myPokemonsTextArea = new JTextArea();
         myPokemonsTextArea.setBounds(10, 168, 321, 321);
         frame.getContentPane().add(myPokemonsTextArea);
         
-        JComboBox selectPokemonComboBox = new JComboBox();
         selectPokemonComboBox.setBounds(10, 524, 761, 22);
         frame.getContentPane().add(selectPokemonComboBox);
         
         JButton changeBtn = new JButton("Trocar");
+        changeBtn.setFont(new Font("Stencil", Font.ITALIC, 10));
         changeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 sendBtn(e);
@@ -110,6 +143,15 @@ public class ChangePokes implements Battle{
         friendPokemonsTextArea.setBounds(450, 168, 321, 321);
         frame.getContentPane().add(friendPokemonsTextArea);
         
+        JButton addBtn = new JButton("Adicionar Pokemon a lista");
+        addBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        addBtn.setFont(new Font("Stencil", Font.BOLD | Font.ITALIC, 15));
+        addBtn.setBounds(108, 557, 541, 43);
+        frame.getContentPane().add(addBtn);
+        
         JLabel friendPokemonsLabel = new JLabel("Pokemons Amigo");
         friendPokemonsLabel.setFont(new Font("Stencil", Font.BOLD | Font.ITALIC, 19));
         friendPokemonsLabel.setBounds(523, 124, 174, 33);
@@ -118,7 +160,7 @@ public class ChangePokes implements Battle{
 
     @Override
     public void pokemonBattle(String pokemon) {
-        chat.append(pokemon + System.lineSeparator());
+        myPokemonsTextArea.append(pokemon + System.lineSeparator());
         
     }
 

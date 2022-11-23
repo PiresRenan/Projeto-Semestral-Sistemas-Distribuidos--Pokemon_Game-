@@ -47,7 +47,7 @@ public class Builder {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 797, 609);
+        frame.setBounds(100, 100, 797, 650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
@@ -100,6 +100,7 @@ public class Builder {
         frame.getContentPane().add(selectPokemonComboBox);
         
         JButton changeBtn = new JButton("Trocar");
+        changeBtn.setFont(new Font("Stencil", Font.ITALIC, 10));
         changeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
@@ -120,5 +121,14 @@ public class Builder {
         friendPokemonsLabel.setFont(new Font("Stencil", Font.BOLD | Font.ITALIC, 19));
         friendPokemonsLabel.setBounds(523, 124, 174, 33);
         frame.getContentPane().add(friendPokemonsLabel);
+        
+        JButton addBtn = new JButton("Adicionar Pokemon a lista");
+        addBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        addBtn.setFont(new Font("Stencil", Font.BOLD | Font.ITALIC, 15));
+        addBtn.setBounds(108, 557, 541, 43);
+        frame.getContentPane().add(addBtn);
     }
 }

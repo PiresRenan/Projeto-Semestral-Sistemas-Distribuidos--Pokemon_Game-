@@ -75,6 +75,34 @@ public class DataBaseMethods{
 		return null;
 	}
 	
+	public Pokemon searchPokemonUser(String name) throws SQLException{
+        String sql = "SELECT * FROM userpokemons;";
+        PreparedStatement statement = c.prepareStatement(sql);
+        ResultSet result = statement.executeQuery();
+        while(result.next()) {
+            Pokemon p = new Pokemon(
+                    result.getInt(1),
+                    result.getString(2), 
+                    result.getString(3), 
+                    result.getString(4), 
+                    result.getString(5), 
+                    result.getInt(6), 
+                    result.getInt(7), 
+                    result.getInt(8), 
+                    result.getInt(9), 
+                    result.getInt(10),
+                    result.getInt(11)
+                    );
+            String nome = p.getOwner();
+            System.out.println(name + "\n" + nome + "\n" + (name == nome) + "\n");
+            if (nome == name) {
+                System.out.println(p);
+                return p;
+            }
+        }
+        return null;
+    }
+	
 	public Pokemon searchPokemonID(int id) throws SQLException{
         String sql = "SELECT * FROM pokes WHERE id=?;";
         PreparedStatement statement = c.prepareStatement(sql);

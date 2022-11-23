@@ -2,7 +2,7 @@ package model;
 
 public class Pokemon {
 	
-	private String name, type, abilities;
+	private String name, type, abilities, owner;
 	private int id, hp, att, def, special_att, special_def, spd;
 	
 	public Pokemon(String name, String type, String abilities, int hp, int att, int def, int special_att, int special_def, int spd) {
@@ -30,7 +30,22 @@ public class Pokemon {
 		this.spd = spd;
 	}
 
-	public String getName() {
+	public Pokemon(int id, String owner, String pokemon, String type, String abilities, int hp, int att,
+            int def, int special_att, int special_def, int spd) {
+	    this.name = pokemon;
+        this.type = type;
+        this.abilities = abilities;
+        this.id = id;
+        this.owner = owner;
+        this.hp = hp;
+        this.att = att;
+        this.def = def;
+        this.special_att = special_att;
+        this.special_def = special_def;
+        this.spd = spd;
+    }
+
+    public String getName() {
 		return name;
 	}
 
@@ -50,7 +65,15 @@ public class Pokemon {
 		return abilities;
 	}
 
-	public void setAbilities(String abilities) {
+	public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setAbilities(String abilities) {
 		this.abilities = abilities;
 	}
 
