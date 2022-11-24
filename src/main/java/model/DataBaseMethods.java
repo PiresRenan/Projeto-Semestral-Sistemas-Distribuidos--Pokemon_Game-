@@ -96,9 +96,46 @@ public class DataBaseMethods{
                     result.getInt(11)
                     );
             System.out.println(p.toString());
+			return p;
         }
         return null;
     }
+
+	public static void upgradePokemon(Pokemon p, String attribute, int valor) throws SQLException{
+		String sql = "";
+		Connection c = ConnDB.getConnection(); 
+		switch (attribute) {
+			case "hp":
+				p.setHp(p.getHp() +valor);
+				sql = "UPDATE userpokemons SET hp=? WHERE id=?;";
+				break;
+			case "att":
+				p.setAtt(p.getAtt() + valor);
+				sql = "UPDATE userpokemons SET att=? WHERE id=?;";
+				break;
+			case "def":
+				p.setDef(p.getDef() + valor);
+				sql = "UPDATE userpokemons SET def=? WHERE id=?;";
+				break;
+			case "special_att":
+				p.setSpecial_att(p.getSpecial_att() + valor);
+				sql = "UPDATE userpokemons SET Special_att=? WHERE id=?;";
+				break;
+			case "special_def":
+				p.setSpecial_def(p.getSpecial_def() + valor);
+				 sql = "UPDATE userpokemons SET special_def=? WHERE id=?;";
+				break;
+			case "special_sdp":
+				p.setSpd(p.getSpd() + valor);
+				 sql = "UPDATE userpokemons SET spd=? WHERE id=?;";
+				break;
+		}
+		PreparedStatement statement = c.prepareStatement(sql);
+		statement.setInt(1, p.getAtt());
+		statement.setInt(2, p.getId());
+		statement.executeUpdate();
+		JOptionPane.showMessageDialog(null, "Atributos crescesceram rapa");
+	}
 	
 	public static Pokemon searchPokemonID(int id) throws SQLException{
 		Connection c = ConnDB.getConnection(); 
