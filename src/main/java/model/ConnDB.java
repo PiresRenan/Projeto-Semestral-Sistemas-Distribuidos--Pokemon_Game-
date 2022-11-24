@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnDB {
     static String url = "jdbc:mysql://127.0.0.1:3306/pokemons?useTimezone=true&serverTimezone=UTC";
 	static String username = "root";
-	static String password = "13579Rock";
+	static String password = "152127";
 
     public static Connection getConnection(){
 

@@ -110,32 +110,32 @@ public class DataBaseMethods{
         return null;
     }
 
-	public static void upgradePokemon(Pokemon p, String attribute, int valor) throws SQLException{
+	public static void upgradePokemon(Pokemon p, String attribute, int rand_n) throws SQLException{
 		String sql = "";
 		Connection c = ConnDB.getConnection(); 
 		switch (attribute) {
 			case "hp":
-				p.setHp(p.getHp() +valor);
+				p.setHp(p.getHp() + rand_n);
 				sql = "UPDATE userpokemons SET hp=? WHERE id=?;";
 				break;
 			case "att":
-				p.setAtt(p.getAtt() + valor);
+				p.setAtt(p.getAtt() + rand_n);
 				sql = "UPDATE userpokemons SET att=? WHERE id=?;";
 				break;
 			case "def":
-				p.setDef(p.getDef() + valor);
+				p.setDef(p.getDef() + rand_n);
 				sql = "UPDATE userpokemons SET def=? WHERE id=?;";
 				break;
 			case "special_att":
-				p.setSpecial_att(p.getSpecial_att() + valor);
+				p.setSpecial_att(p.getSpecial_att() + rand_n);
 				sql = "UPDATE userpokemons SET Special_att=? WHERE id=?;";
 				break;
 			case "special_def":
-				p.setSpecial_def(p.getSpecial_def() + valor);
+				p.setSpecial_def(p.getSpecial_def() + rand_n);
 				 sql = "UPDATE userpokemons SET special_def=? WHERE id=?;";
 				break;
 			case "special_sdp":
-				p.setSpd(p.getSpd() + valor);
+				p.setSpd(p.getSpd() + rand_n);
 				 sql = "UPDATE userpokemons SET spd=? WHERE id=?;";
 				break;
 		}
