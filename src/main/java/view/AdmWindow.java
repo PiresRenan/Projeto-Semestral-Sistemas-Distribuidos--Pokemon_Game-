@@ -222,11 +222,25 @@ public class AdmWindow {
 		JButton upgradeBtn = new JButton("Treinar Pokemon");
 		upgradeBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+				try {
+					Pokemon pokemon = DataBaseMethods.searchPokemonUser("Renan");
+					String a = JOptionPane.showInputDialog(null, "Escolha o atributo que quer trocar");
+					Random random = new Random();
+					int rand_n = random.nextInt(10);
+					DataBaseMethods.upgradePokemon(pokemon, a, rand_n);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				//  try {
+				//	Random a = new Random();
+				//	 int aleatorio_stats = a.nextInt(9) + 1;
+                  // 
+                //}
 		       
 		    }
 		});
 		upgradeBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
-		upgradeBtn.setBounds(245, 185, 156, 35);
+		upgradeBtn.setBounds(245, 185, 156, 35 );
 		frame.getContentPane().add(upgradeBtn);
 		
 		JButton changeBtn = new JButton("Trocar Pokemon");
