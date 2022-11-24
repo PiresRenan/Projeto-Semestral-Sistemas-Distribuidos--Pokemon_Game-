@@ -37,7 +37,8 @@ public class ChangePokes implements Battle{
         Pokemon poke = null;
         DataBaseMethods n = new DataBaseMethods();
         try {
-            poke = DataBaseMethods.searchPokemonUser("comum");
+            poke = DataBaseMethods.searchPokemonUser(user.getName());
+            selectPokemonComboBox.add(poke);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,7 +58,7 @@ public class ChangePokes implements Battle{
         client.start();
     }
     
-    public void initialize() {
+    public void initialize(Users user) {
         frame = new JFrame();
         populateList();
         frame.setVisible(true);
@@ -136,6 +137,7 @@ public class ChangePokes implements Battle{
         JButton addBtn = new JButton("Adicionar Pokemon a lista");
         addBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                pokemonBattle("Teste");
             }
         });
         addBtn.setFont(new Font("Stencil", Font.BOLD | Font.ITALIC, 15));

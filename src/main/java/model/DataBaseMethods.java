@@ -35,6 +35,15 @@ public class DataBaseMethods{
         int rowsInserted = statement.executeUpdate();
         return (rowsInserted > 0);
     }
+
+	public static void deletePokemon(String nome_p, String owner) throws SQLException{
+		Connection c = ConnDB.getConnection(); 
+		String sql = "DELETE FROM userpokemons WHERE pokemon=? and owner=?;";
+		PreparedStatement st = c.prepareStatement(sql);
+		st.setString(1, nome_p);
+		st.setString(2, owner);
+		st.executeQuery();
+	}
 	
 	public boolean insertPokemon(Pokemon p) throws SQLException {
 		String sql = "INSERT INTO pokes (name, type, abilities, hp, att, def, special_att, special_def, spd) VALUES (?,?,?,?,?,?,?,?,?);";

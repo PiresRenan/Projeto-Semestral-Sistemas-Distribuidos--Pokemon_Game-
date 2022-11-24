@@ -223,7 +223,7 @@ public class AdmWindow {
 		upgradeBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 				try {
-					Pokemon pokemon = DataBaseMethods.searchPokemonUser("Renan");
+					Pokemon pokemon = DataBaseMethods.searchPokemonUser(user.getName());
 					String a = JOptionPane.showInputDialog(null, "Escolha o atributo que quer trocar");
 					Random random = new Random();
 					int rand_n = random.nextInt(10);
@@ -231,11 +231,6 @@ public class AdmWindow {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				//  try {
-				//	Random a = new Random();
-				//	 int aleatorio_stats = a.nextInt(9) + 1;
-                  // 
-                //}
 		       
 		    }
 		});
@@ -247,7 +242,7 @@ public class AdmWindow {
 		changeBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        ChangePokes p = new ChangePokes();
-		        p.initialize();
+		        p.initialize(user);
 		    }
 		});
 		changeBtn.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
