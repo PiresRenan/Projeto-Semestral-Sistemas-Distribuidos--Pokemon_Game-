@@ -134,7 +134,7 @@ public class DataBaseMethods{
 				p.setSpecial_def(p.getSpecial_def() + rand_n);
 				 sql = "UPDATE userpokemons SET special_def=? WHERE id=?;";
 				break;
-			case "special_sdp":
+			case "spd":
 				p.setSpd(p.getSpd() + rand_n);
 				 sql = "UPDATE userpokemons SET spd=? WHERE id=?;";
 				break;

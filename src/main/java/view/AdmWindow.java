@@ -254,7 +254,7 @@ public class AdmWindow {
 		    public void actionPerformed(ActionEvent e) {
 		        try {
 					Random a = new Random();
-					 int aleatorio_n = a.nextInt(3) + 1;
+					 int aleatorio_n = a.nextInt(150) + 1;
                     Pokemon p = DataBaseMethods.searchPokemonID(aleatorio_n);
 					DataBaseMethods.capturarPokemon(p, user.getName());
                 } catch (SQLException e1) {

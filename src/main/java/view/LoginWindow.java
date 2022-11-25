@@ -60,7 +60,7 @@ public class LoginWindow {
                     if (LoginAuths.getAuth( usernameTxtField.getText(), passwordField.getText() )) {
                         principalFrame.dispose();
                     }else {
-                       JOptionPane.showMessageDialog(null, "Usuario não encontrado", "Erro", JOptionPane.ERROR_MESSAGE );
+                       JOptionPane.showMessageDialog(null, "Usuario ou senha não encontrados", "Erro", JOptionPane.ERROR_MESSAGE );
                     }
                 } catch (HeadlessException | SQLException error) {
                     error.printStackTrace();
